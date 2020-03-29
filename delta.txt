@@ -1,0 +1,64 @@
+function get_p_given_n()
+{
+	
+
+	var num = [];
+	var j = 0;
+
+	for (var i = 0; i < n.length; i++)  // check if entry 'n' is valid
+	{
+		if(n[i] == ' ') {}
+
+		else if(n[i] == '0')
+			{ if(j>0) num[j++] = '0'; }
+
+		else if(n[i] >= '1' && n[i] <= '9')
+			{ num[j++] = n[i]; }    // get num as an array
+
+		else { j=0; break; }
+	}
+	if(j==0) p.innerHTML = "n must be a counting number > 0";
+	else     p.innerHTML = "p = " + get_p_from_n(num).join("");
+}
+
+function get_p_from_n (n) // get n and return p both as arrays
+{
+	var i, j;
+	var p = n;
+	var t = n.length;
+
+	if(t==1) { p[0] -= 1; }                 // if n has only one digit
+
+	else if(p[0]=='1' && p[1]=='0')         // if first two digits == 10
+	{
+		p[0] = ' ';
+		p[1] = '9';                         // n - 10^(t-2) => 10-1 = 9
+		for (j=t, i=t-2; i>=1; i--, j++)    // copy from t-2 down to 1
+			p[j] = p[i];                    // so k = t-1 + t-2 = 2t-3
+	}
+	else if(p[0]=='1')                      // if 11 <= first two digits <= 19
+	{
+		p[0] = ' ';                         // n - 10^(t-1) => 1-1 = 0
+		for (j=t, i=t-1; i>=1; i--, j++)    // copy from t-1 down to 1
+			p[j] = p[i];                    // so k = t-1 + t-1 = 2t-2
+	}
+	else                                    // if first two digits >= 20
+	{
+		p[0] -= 1;                          // n - 10^(t-1)
+		for (j=t, i=t-2; i>=0; i--, j++)    // copy from t-2 down to 0
+			p[j] = p[i];                    // so k = t-0 + t-1 = 2t-1
+	}
+	return p;
+}
+
+function get_n_given_p()
+{
+	var p = document.getElementById("value_of_p").value;
+	var n = document.getElementById("n_given_p");
+}
+
+function get_n_from_p (p)
+{
+	var n = p; // wrong on purpose!
+	return n;
+}
